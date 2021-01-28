@@ -8,37 +8,34 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 </head>
 <body>
-    <h1 class="has-text-centered is-size-1">Weather Tracker</h1>
+    <h1 class="has-text-centered is-size-1 has-background-grey has-text-white">Weather Tracker</h1>
     <h2 class="has-text-centered is-size-4">See current weather all over the world!</h2>
     
-<div class="container search pt-5 ">
+<div class="container search pt-5">
     <div class="columns is-multiline">
-      <div class="box column is-one-quarter field is-grouped is-grouped-centered mr-5">
+      <div class="box column is-one-quarter field is-grouped is-grouped-centered mr-5 has-background-info">
           <input class="input" id="user-search" type="text" placeholder="Enter a City">
           <button class="button" id="clicked-button">Search</button>       
       </div>
     
-      <div class="box column mt-4">
-        <p class="current-weather">current weather forecast Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nisl eros, 
-            pulvinar facilisis justo mollis, auctor consequat urna. Morbi a bibendum metus. 
-            Donec scelerisque sollicitudin enim eu venenatis. Duis tincidunt laoreet ex, 
-            in pretium orci vestibulum eget. Class aptent taciti sociosqu ad litora torquent
-            per conubia nostra, per inceptos himenaeos. Duis pharetra luctus lacus ut 
-            vestibulum. Maecenas ipsum lacus, lacinia quis posuere ut, pulvinar vitae dolor.
-            Integer eu nibh at nisi ullamcorper sagittis id vel leo. Integer feugiat 
-            faucibus libero, at maximus nisl suscipit posuere. Morbi nec enim nunc. 
-            Phasellus bibendum turpis ut ipsum egestas, sed sollicitudin elit convallis. 
-            Cras pharetra mi tristique sapien vestibulum lobortis. Nam eget bibendum metus, 
-            non dictum mauris. Nulla at tellus sagittis, viverra est a, bibendum metus.</p>
+      <div class="box column mt-4 current-weather has-background-warning">
+          <p class="is-size-2">Today's Weather</p>
+          <p class="is-size-3 current-city-name"></p>
+          <p class="is-size-6 current-temp"></p>
+          <p class="is-size-6 current-humidity"></p>
+          <p class="is-size-6 current-wind"></p>
+          <p class="is-size-6 current-uv"></p>
+
+        
 </div>
     </div>
   </div>
 <div class="container previously-searched pt-5">
     <div class="columns">
-        <div class="box column is-one-quarter mr-5">
-            <p>results.....</p>
+        <div class="box column is-one-quarter mr-5 has-background-success">
+            <p class="store-results">Local Storeage Results</p>
         </div>
-        <div class="box column mt-5">
+        <div class="box column mt-5 has-background-danger">
             <p>Five Day Forecast</p>
         </div>
     </div>
