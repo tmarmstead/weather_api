@@ -25,15 +25,16 @@ $("button").click(function (event) {
     url: currentUrl,
     method: "GET"
   }).then(function (response) {
+    console.log(response);
     $('.current-city-name').html(cityInput);
     $('.current-temp').html('Temperature: ' + response.main.temp);
     $('.current-humidity').html("<h3>" + 'Humidity: ' + response.main.humidity);
-    $('.current-wind').html('Wind: (fix this to display wind, not temp) ' + response.main.temp + 'mph');
+    $('.current-wind').html('Wind: ' + response.wind.speed + 'mph');
 
     console.log('temperature is: ', response.main.temp);
     console.log('entered city is: ', cityInput);
     console.log('humidity is: ', response.main.humidity);
-    console.log('wind speed is: ', response.main, response.main.wind);
+    console.log('wind speed is: ', response.wind.speed);
     console.log(response);
 
 
@@ -55,23 +56,58 @@ $("button").click(function (event) {
 
 
       // // 5 Day Forecast Functionality
-      
-      let forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + currentKey + "&units=imperial";
+      let forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude={part}&appid=" + currentKey;
 
       $.ajax({
         url: forecastUrl,
         method: "GET"
       }).then(function (response) {
-        console.log('Here is 5 Day forecast: ', response, response.list);
+        console.log('Here is 5 Day forecast: ', response);
         
-          
         
-        // for(i = 5; i <= 40; i + 8) {
+        for(i = 1; i < 6; i++) {
+          let card = $('<div>').attr('class', 'card');
+          let cardContent = $('<p>').attr('class', 'card-content');
+          let content = $('<p>').attr('class', 'content  mb-4');
+          // make date variable
+          let forecastIcon = $('<img>').attr('src', 'https://openweathermap.org/img/w/' + response.daily[i].weather[0].icon + '.png');
+          let maxTemp = ('MaxTemp: ' + ((response.daily[i].temp.max -273.15) * 1.80 + 32).toFixed(0) + '\u00b0 F');
+          let minTemp = ('MinTemp: ' + ((response.daily[i].temp.min -273.15) * 1.80 + 32).toFixed(0) + '\u00b0 F'); 
+          let dailyHumidity = ('Humidity; ' + response.daily[i].humidity);
+
+          $('.daily-forecast').append(card);
+          card.append(cardContent);
+          cardContent.append(content);
+
+          content.append(forecastIcon); 
+          content.append(maxTemp); 
+          content.append(minTemp); 
+          content.append(dailyHumidity);
+        }
         
-        //  let fiveForecast = response.list
-        //  console.log(fiveForecast[i]);
-        // }
         
+        // local storage 
+        function createItem() {
+          localStorage.setItem('previously-searched', cityInput); 
+        } 
+        createItem() // Creates a item named 'nameOfItem' and stores a value of 'value'
+        
+        function getValue() {
+          return localStorage.getItem('previously-searched');
+            
+        } // Gets the value of 'nameOfItem' and returns it
+        console.log(getValue()); //'value';
+        let saveToStorage = $('<p>').attr('class', 'storageParagraph');
+        let newStorageButton = $('<button>').attr('class', 'here-it-goes button ml-2',) 
+        let retrievedFromStorage = getValue();
+
+        
+        $('.local-storage-buttons').append(newStorageButton);
+       $(newStorageButton).html(retrievedFromStorage);
+
+      //  $("button").click(function (event) {
+      //   event.preventDefault();
+
 
 
       });
