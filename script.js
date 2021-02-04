@@ -1,7 +1,9 @@
 let cityInput = $("#user-search").val();
 let currentKey = "eeee2e82be645c72cba0460f87b4f2c8";
 let currentUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + currentKey + "&units=imperial";
-
+console.log(localStorage);
+console.log(window.localStorage);
+let currentCityInformation;
 // function currentWeather(){
 //   $.ajax({
 //     url: currentUrl,
@@ -25,7 +27,9 @@ $("button").click(function (event) {
     url: currentUrl,
     method: "GET"
   }).then(function (response) {
-    console.log(response);
+    console.log({response});
+    currentCityInformation = JSON.stringify(response.main);
+    console.log({currentCityInformation});
     $('.current-city-name').html(cityInput);
     $('.current-temp').html('Temperature: ' + response.main.temp);
     $('.current-humidity').html("<h3>" + 'Humidity: ' + response.main.humidity);
@@ -93,23 +97,15 @@ $("button").click(function (event) {
         }
         
         
-        // local storage 
-        
-        
-        function getValue() {
-          return localStorage.getItem('previously-searched');
-            
-        } // Gets the value of 'nameOfItem' and returns it
-        console.log(getValue()); //'value';
+        // local storage ;
 
         function createItem() {
-          localStorage.setItem('previously-searched', cityInput); 
+          localStorage.setItem(cityInput, currentCityInformation); 
         } 
-        createItem() // Creates a item named 'nameOfItem' and stores a value of 'value'
+        createItem();
 
-        let saveToStorage = $('<p>').attr('class', 'storageParagraph');
         let newStorageButton = $('<button>').attr('class', 'here-it-goes button ml-2',) 
-        let retrievedFromStorage = getValue();
+        let retrievedFromStorage = cityInput;
 
         
         $('.local-storage-buttons').append(newStorageButton);
@@ -117,8 +113,8 @@ $("button").click(function (event) {
 
        $(".here-it-goes").click(function (event) {
         event.preventDefault();
-        console.log("I've been clicked!");
-
+       
+        
 
 
 
@@ -126,7 +122,7 @@ $("button").click(function (event) {
     });
   });
 });
-
+})
 
 
 
@@ -176,4 +172,4 @@ $("button").click(function (event) {
     // function that takes a user input
     // click button to take in user input 
     // out put current weather info based of of user input
-
+  
