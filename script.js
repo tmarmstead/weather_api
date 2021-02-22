@@ -1,25 +1,16 @@
-let cityInput = $("#user-search").val();
 let currentKey = "eeee2e82be645c72cba0460f87b4f2c8";
-let currentUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + currentKey + "&units=imperial";
 console.log(localStorage);
 console.log(window.localStorage);
 let currentCityInformation;
-// function currentWeather(){
-//   $.ajax({
-//     url: currentUrl,
-//     method : "GET"
-//   }).then(function(response) {
-//       console.log(response);
-//       console.log(currentUrl);
-//       console.log(cityInput);
-
-
 
 // Current Weather Functionality
-$("button").click(function (event) {
+
+  $("button").click(function (event) {
   event.preventDefault();
 
   let cityInput = $("#user-search").val();
+
+  localStorageCity(cityInput);
 
   let currentUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + currentKey + "&units=imperial";
 
@@ -68,15 +59,16 @@ $("button").click(function (event) {
       }).then(function (response) {
         console.log('Here is 5 Day forecast: ', response);
         
-        
+        $('.daily-forecast').empty();
+
         for(i = 1; i < 6; i++) {
-          let card = $('<div>').attr('class', 'card');
+          let card = $('<div>').addClass('column card');
           let cardContent = $('<p>').attr('class', 'card-content');
           let content = $('<p>').attr('class', 'content  mb-4');
 
           
           let dateParagraph = $('<p>').attr('class', 'date');
-          let date = $(dateParagraph).html(moment().format("MMM Do YY")); 
+          let date = $(dateParagraph).html(moment().add(i, 'days').format('M/D/YYYY'));
           
           
 
@@ -95,81 +87,32 @@ $("button").click(function (event) {
           content.append(minTemp + "<br>"); 
           content.append(dailyHumidity);
         }
-        
-        
-        // local storage ;
-
-        function createItem() {
-          localStorage.setItem(cityInput, currentCityInformation); 
-        } 
-        createItem();
-
-        let newStorageButton = $('<button>').attr('class', 'here-it-goes button ml-2',) 
-        let retrievedFromStorage = cityInput;
-
-        
-        $('.local-storage-buttons').append(newStorageButton);
-       $(newStorageButton).append(retrievedFromStorage);
-
-       $(".here-it-goes").click(function (event) {
-        event.preventDefault();
-       
-        
-
-
-
       });
     });
   });
 });
-})
 
 
+ // local storage ;
+function historyButtons(cityName){
+  let newStorageButton = $('<button>').attr('class', 'button ml-2').text(cityName);
+  $('.local-storage-buttons').append(newStorageButton);
+
+}
+
+function localStorageCity(cityName) {
+  let history = JSON.parse(window.localStorage.getItem('history')) || [];
+  console.log(history);
+  history.push(cityName);
+  localStorage.setItem('history', JSON.stringify(history)); 
+} 
+
+function  generateHistory() {
+  let history = JSON.parse(window.localStorage.getItem('history')) || [];
+ for (let i = 0; i < history.length; i++) {
+      historyButtons(history[i]);
+  }
+}
+generateHistory();
 
 
-// $("button").click(function(event){
-//   event.preventDefault();
-
-//   let cityInput = $("#user-search").val();
-
-
-//   let currentUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + currentKey + "&units=imperial";
-
-//   $.ajax({
-//     url: currentUrl,
-//     method : "GET"
-//   }).then(function(response) {
-//     console.log('Here is 5 Day forecast');
-// });
-// });
-
-
-
-
-
-// function uvData(lat, lon){
-//   $.ajax({
-//     url: queryURL,
-//     method: "GET"
-//   }).then(function(response) {
-//       console.log(response);
-//       console.log(queryURL);
-//   });
-// }
-// uvData();
-
-// function fiveDayForecast(city) {
-//     $.ajax({
-//       url: queryURL,
-//       method: "GET"
-//     }).then(function(response) {
-//         console.log(response);
-//         console.log(queryURL);
-//     });
-//   }
-// fiveDayForecast();
-//   add button with event listener
-    // function that takes a user input
-    // click button to take in user input 
-    // out put current weather info based of of user input
-  
